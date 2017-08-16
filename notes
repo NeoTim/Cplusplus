@@ -1,0 +1,35 @@
+# 内存管理
+## 释放内存注意事项
+int *p = new int;
+if (NULL == p)
+{
+//内存分配失败
+//异常处理
+}
+delete p;
+p = NULL;
+
+int *p = new int[1000];
+if (NULL == p)
+{
+//内存分配失败
+//异常处理
+}
+delete []p;
+p = NULL;
+
+使用new申请内存，使用delete释放内存。
+申请内存需要判断是否成功，释放内存需要设空指针。
+new与delete配套使用。
+C语言：
+void *mallloc(size_t size);
+void free(void *memblock);
+比较：
+C
+in *p = (int *)malloc(sizeof(int));
+C++
+int *p = new int;
+C
+int *arr = (int*)calloc(5,sizeof(int));
+C++
+int *p = new int[5];

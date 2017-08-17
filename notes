@@ -33,3 +33,63 @@ C
 int *arr = (int*)calloc(5,sizeof(int));
 C++
 int *p = new int[5];
+
+# 类与对象
+class TV
+{
+public:
+char name[20];
+int type;
+
+void changeVol();
+void power();
+}
+从栈实例化对象
+int main(void)
+{
+TV tv;
+TV tv[20];
+
+return 0;
+}
+从栈访问对象成员
+int main(void)
+{
+TV tv;
+tv.type = 0;
+tv.changeVol();
+return 0;
+}
+
+从堆实例化对象
+int main(void)
+{
+TV *p = new TV();
+TV *q = new TV[20];
+delete p;
+delete []q;
+return 0;
+}
+从堆中访问对象成员
+int main(void)
+{
+TV *p = new TV();
+p->type = 0;
+p->changeVol();
+delete p;
+p = NULL;
+return 0;
+}
+若是数组
+int main(void)
+{
+TV *p = new TV[5];
+for (int i=0; i < 5; i++)
+{
+p[i]->type = 0;
+p[i]->changeVol();
+}
+delete []p;
+p = NULL;
+return 0;
+}

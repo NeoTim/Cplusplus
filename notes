@@ -113,3 +113,58 @@ v1 != v2 判定不等，不等返回true，否则返回false
 但是string s2("world");
 string s = "hello" + s2;或
 string s = "hello" + s2 + "world";是合法的。
+
+# 类内定义和类外定义
+## 类内定义
+class Student
+{
+public:
+void setAge(int_age)
+{
+  age = _age;
+}
+int getAge()
+{
+  return age;
+}
+void study()
+{
+  //To do
+}
+private:
+  string name;
+  int age;
+};
+
+## 类外定义
+### 同文件类外定义
+Car.cpp
+class Car
+{
+  public:
+  void run();
+  void stop();
+  void changeSpeed();
+};
+void Car::run(){}
+void Car::stop(){}
+void Car::changeSpeed(){}
+
+### 分文件类外定义（最常用）
+Car.h
+class Car
+{
+public:
+  void run();
+  void stop();
+  void changeSpeed();
+};
+
+Car.cpp
+#include "Car.h"
+void Car::run()
+{}
+void Car::stop()
+{}
+void Car::changeSpeed()
+{}

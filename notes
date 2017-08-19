@@ -168,3 +168,49 @@ void Car::stop()
 {}
 void Car::changeSpeed()
 {}
+
+# 对象结构
+## 内存分区
+栈区：int x = 0; int *p = NULL;（内存由系统分配，程序员不必关心分配和回收）
+堆区：int *p = new int[20];（需要管理内存）
+全局区：存储全局变量及静态变量
+常量区：string str = "hello";
+代码区：存储逻辑代码的二进制
+
+## 构造函数
+构造函数在对象实例化时被自动调用（1次）
+构造函数与类同名
+构造函数没有返回值
+构造函数可以有多个重载形式
+实例化对象时仅用到一个构造函数
+当用户没有定义构造函数时，编译器自动生成一个构造函数
+
+### 无参构造函数
+class Student
+{
+public:
+  Student(){m_strName = "jim";}
+private:
+string m_strName;
+};
+
+### 有参构造函数
+class Student
+{
+public:
+  Student(string name)
+  {m_strName = name;}
+private:
+  string m_strName;
+};
+
+### 重载构造函数
+class Student
+{
+public:
+  Student(){m_strName = "jim";}
+  Student(string name)
+  {m_strName = name;}
+private:
+  string m_strName;
+};

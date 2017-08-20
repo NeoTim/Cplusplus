@@ -214,3 +214,84 @@ public:
 private:
   string m_strName;
 };
+
+## 构造函数初始化列表
+class Student
+{
+public:
+  Student():m_strName("Jim"),m_iAge(10){}
+private:
+  string m_strName;
+  int m_iAge;
+};
+特性：
+初始化列表先于构造函数执行
+初始化列表只能用于构造函数
+初始化列表可以同时初始化多个数据成员
+必要性：
+class Circle
+{
+public:
+  Circle(){m_dPi=3.14}  错误
+private:
+const double m_dPi;
+};
+
+class Circle
+{
+public:
+  Circle():m_dPi(3.14){}  正确
+private:
+const double m_dPi;
+};
+
+## 拷贝构造函数
+定义格式：类名（const 类名&变量名）
+class Student
+{
+public:
+  Student(){m_strName = "jim";}  //普通构造函数
+  Student(const Student& stu){}  //拷贝构造函数
+private:
+string m_strName;
+};
+
+- 如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数
+- 当采用直接初始化或复制初始化实例化对象时系统自动调用拷贝构造函数
+
+总结：构造函数分为无参构造函数和有参构造函数
+无参构造函数-->默认构造函数
+有参构造函数又分为参数带默认值（每个参数都带就是默认构造函数）和参数无默认值
+
+系统自动生成的函数包括普通构造函数和拷贝构造函数
+
+例：
+Teacher t1;//调用普通构造函数
+Teacher t2 = t1;//调用拷贝构造函数
+Teacher t3(t1);//调用拷贝构造函数
+
+拷贝构造函数的参数是确定的，不能重载。
+
+## 析构函数
+定义格式：~类名（）
+class Student
+{
+public:
+  Student(){cout<<"Student"<<endl;}
+  ~Student(){cout<<"~Student"<<endl;}
+private:
+  string m_strName;
+};
+
+class Student
+{
+public:
+  Student() {m_pName = new char[20];}
+  ~Student(){delete []m_pName;}
+private:
+  char *m_pName;
+};
+
+如果没有自定义的析构函数则系统自动生成
+析构函数在对象销毁时自动调用
+析构函数没有返回值、没有参数也不能重载

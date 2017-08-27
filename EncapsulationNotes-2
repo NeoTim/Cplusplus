@@ -38,3 +38,22 @@ int main(void)
   Array arr2=arr1;
   return 0;
 }
+
+# 对象指针
+## 堆
+Coordinate *p1=NULL;
+p1=new Coordinate;
+p1->m_iX=10;
+Coordinate *p2=new Coordinate();
+...（后续操作）
+delete p1;
+p1=NULL;
+delete p2;
+p2=NULL;
+
+## 栈
+Coordinate p1;
+Coordinate *p2=&p1;
+p2->m_iX=10;
+cout<<p1.m_iX<<endl;
+（p2操作了p1的数据成员）

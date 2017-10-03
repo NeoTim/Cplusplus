@@ -57,3 +57,10 @@ Coordinate *p2=&p1;
 p2->m_iX=10;
 cout<<p1.m_iX<<endl;
 （p2操作了p1的数据成员）
+
+# const
+const *p            --> *p不可以再赋值
+
+*const p            -->  p不可以再赋值
+
+const * const p --> *p和p都不可以再赋值

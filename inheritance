@@ -1,0 +1,15 @@
+# 几个继承
+公有继承  class A:public B
+保护继承 class A:protected B
+私有继承 class A:private B
+
+基类成员访问属性  继承方式  派生类成员访问属性
+private成员       public     无法访问
+protected成员     public     protected
+public成员        public     public
+
+# 保护继承
+基类成员访问属性  继承方式    派生类成员访问属性
+private成员      protected    无法访问
+protected成员    protected    protected
+public成员       protected    protected 

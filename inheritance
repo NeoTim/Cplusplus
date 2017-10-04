@@ -13,3 +13,70 @@ public成员        public     public
 private成员      protected    无法访问
 protected成员    protected    protected
 public成员       protected    protected 
+
+# 隐藏
+class Person
+{
+public:
+void play();
+
+protected:
+string m_strName;
+string code;
+};
+
+class Soldier:public Person
+{
+public:
+void play();
+void work();
+
+protected:
+int iCode;
+};
+
+int main(void)
+{
+Soldier soldier;
+soldier.play();
+soldier.Person::play();//调用父类同名函数需用此办法
+return 0;
+}
+
+void Soldier::work()
+{
+code=1234;
+Person::code="5678";
+}
+
+## isA
+int main(void)
+{
+Soldier s1;
+Person p1 = s1;
+Person *p2 = &s1;
+
+return 0;
+}
+
+---
+void fun1(Person *p)
+{
+……
+}
+void fun2(Person &p)
+{
+……
+}
+
+int main(void)
+{
+Person p1;
+Soldier s1;
+fun1(&p1);  fun2(p1);
+fun1(&s1);  fun2(s1);
+return 0;
+}
+
+虚析构函数
+当存在继承关系时，使用父类的指针去指向堆中的子类的对象，并且还希望使用父类的指针去释放这段内存，就需要虚析构函数。

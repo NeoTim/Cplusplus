@@ -1,0 +1,213 @@
+# 虚函数
+## 静态多态（早绑定）
+class Rect
+{
+public:
+  int calcArea(int width);
+  int calcArea(int width, int height);
+};
+
+int main(void)
+{
+  Rect rect;
+  rect.calcArea(10);
+  rect.calcArea(10,20);
+  
+  return 0;
+}
+
+## 动态多态（晚绑定）
+class Shape
+{
+public:
+  virtual double calcArea() //虚函数
+  {
+  cout<<"calcArea"<<endl;
+  return 0;
+  }
+};
+
+class Circle:public Shape
+{
+public:
+  Circle(double r);
+  virtual double calcArea();
+private:
+  double m_dR;
+};
+
+double Circle::calcArea()
+{
+  return 3.14*m_dR*m_dR;
+};
+
+class Rect:public Shape
+{
+public:
+  Rect(double width, double height);
+  virtual double calcArea();
+private:
+  double m_dWidth;
+  double m_dHeight;
+};
+
+double Rect::calcArea()
+{
+  return m_dWidth*m_dHeight;
+};
+
+int main(void)
+{
+  Shape *shape1=new Circle(4,0);
+  Shape *shape2=new Rect(3.0,5.0);
+  shape1->calcArea();
+  shape2->calcArea();
+  delete shape1;
+  delete shape2;
+  return 0;
+}
+
+## 虚析构函数
+多态中存在的问题：内存泄漏
+class Shape
+{
+public:
+  Shape();
+  virtual double calcArea();
+  virtual ~Shape();
+};
+
+class Circle:public Shape
+{
+public:
+  Circle(int x,int y,double r);
+  virtual ~Circle();
+  virtual double calcArea();
+  private:
+    double m_dR;
+    Coordinate *m_pCenter;
+};
+
+Circle::Circle(int x,int y,double r)
+{
+  m_pCenter=new Coordinate(x,y);
+  m_dR=r;
+}
+Circle::~Circle()
+{
+  delete m_pCenter;
+  m_pCenter=NULL;
+}
+
+int main(void)
+{
+  Shape *shape1=new Circle(3,5,4.0);
+  shape1->calcArea();
+  delete shape1;
+  shape1=NULL;
+  return 0;
+}
+
+### virtual在函数中的使用限制
+- 普通函数不能是虚函数
+virtual int test()//错误！
+{
+}
+
+- 静态成员函数不能是虚函数
+class Animal
+{
+public:
+virtual static int getCount();//错误！
+};
+
+- 内联函数不能是虚函数
+class Animal
+{
+public:
+  inline virtual int eat()//错误！
+  {
+  }
+};
+
+- 构造函数不能为虚函数
+class Animal
+{
+public:
+  virtual Animal()//错误！
+  {
+  }
+};
+
+## 虚函数与虚析构函数
+如何实现虚函数和虚析构函数
+### 虚函数的实现原理
+#### 函数指针
+指针指向对象——对象指针
+指针指向函数——函数指针
+
+class Shape
+{
+public:
+  virtual double calcArea()//虚函数
+  {
+    return 0;
+  }
+protected:
+  int m_iEdge;
+};
+
+class Circle:public Shape
+{
+public:
+  Circle(double r);
+private:
+  double m_dR;
+};
+会建立虚函数表
+
+若Circle中定义了calcArea()函数
+class Circle:public Shape
+{
+public:
+  Circle(double r);
+  virtual double calcArea();
+private:
+  double m_dR;
+};
+虚函数表中关于calcArea函数指针不同
+
+### 函数的覆盖与隐藏
+父类和子类有同名函数——隐藏
+上面例子（同名虚函数）——覆盖
+
+## 虚析构函数
+理论前提：执行完子类的析构函数就会执行父类的析构函数
+class Shape
+{
+public:
+  virtual double calcArea()//虚函数
+  {return 0;}
+  virtual ~Shape(){}//虚析构函数
+protected:
+  int m_iEdge;
+};
+
+class Circle:public Shape
+{
+public:
+  Circle(double r);
+  virtual double calcArea();
+  virtual ~Circle();//不写virtual计算机会默认添加
+private:
+double m_dR;
+};
+
+int main(void)
+{
+  Shape *shape=new Circle(10.0);
+  delete shape;
+  shape=NULL;
+  
+  return 0;
+}

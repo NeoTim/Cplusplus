@@ -104,3 +104,15 @@ class MigrantWorker:public Worker,public Farmer
 {
 };
 不写public，系统默认为private。
+
+# 虚继承
+关键字：virtual
+class Worker:virtual public Person
+{
+};
+class Farmer:virtual public Person
+{
+};
+class MigrantWorker:public Worker,public Farmer
+{
+};
